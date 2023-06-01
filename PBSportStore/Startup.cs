@@ -1,4 +1,9 @@
-﻿namespace PBSportStore;
+﻿using Microsoft.EntityFrameworkCore;
+using PBSportStore.Context;
+using PBSportStore.Repositories;
+using PBSportStore.Repositories.Interfaces;
+
+namespace PBSportStore;
 
 public class Startup
 {
@@ -12,6 +17,12 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddDbContext<AppDbContext>(options =>
+           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        
+        services.AddTransient<IProductRepository, ProductRepository>();
+        services.AddTransient<ICategoryRepository, CategoryRepository>();
+
         services.AddControllersWithViews();
     }
 
