@@ -1,12 +1,12 @@
-﻿@model IEnumerable<PBSportStore.Models.Product>
+﻿@model ProductListViewModel
 
 <div>
-    <h2>All products</h2>
+    <h2>@Model.CurrentCategory</h2>
 </div>
 
 <div class="container">
     <div class="row">
-        @foreach(var product in Model){
+        @foreach(var product in Model.Products){
             <div class="col-sm-4 col-md-4 col-lg-4">
                 <p><img src="@product.ImageUrl" class="img-fluid" /></p>
                 <h3>Price: @product.Price.ToString("c")</h3>

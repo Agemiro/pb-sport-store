@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PBSportStore.Repositories.Interfaces;
+using PBSportStore.ViewModels;
 
 namespace PBSportStore.Controllers
 {
@@ -14,9 +15,14 @@ namespace PBSportStore.Controllers
 
         public IActionResult List()
         {
-            var products = _productRepository.Products;
+            //var products = _productRepository.Products;
 
-            return View(products);
+            //return View(products);
+            var productListViewModel = new ProductListViewModel();
+            productListViewModel.Products = _productRepository.Products;
+            productListViewModel.CurrentCategory = "Current Category";
+
+            return View(productListViewModel);
         }
     }
 }
