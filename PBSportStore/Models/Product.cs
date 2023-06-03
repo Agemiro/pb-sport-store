@@ -10,7 +10,7 @@ namespace PBSportStore.Models
         public int ProductId { get; set; }
 
         [Required(ErrorMessage = "Inform the product name")]
-        [Display(Name = "Product name")]
+        [Display(Name = "Name")]
         [StringLength(80, MinimumLength = 10, ErrorMessage = "The {0} must be at least {1} and at most {2}")]
         public string Name { get; set; }
 
@@ -21,7 +21,7 @@ namespace PBSportStore.Models
         public string ShortDescription { get; set; }
 
         [Required(ErrorMessage = "Inform the description")]
-        [Display(Name = "Description")]
+        [Display(Name = "Detailed description")]
         [MinLength(20, ErrorMessage = "The detailed description must have at least {1} characters")]
         [MaxLength(200, ErrorMessage = "The detailed description must have at most {1} characters")]
         public string DetailedDescription { get; set; }
