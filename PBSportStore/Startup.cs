@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PBSportStore.Context;
+using PBSportStore.Models;
 using PBSportStore.Repositories;
 using PBSportStore.Repositories.Interfaces;
 
@@ -22,8 +23,13 @@ public class Startup
         
         services.AddTransient<IProductRepository, ProductRepository>();
         services.AddTransient<ICategoryRepository, CategoryRepository>();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped(sp => ShoppingCart.GetCart(sp));
 
         services.AddControllersWithViews();
+
+        services.AddMemoryCache();
+        services.AddSession();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +48,11 @@ public class Startup
         app.UseHttpsRedirection(); 
         app.UseStaticFiles();
         app.UseRouting();
+
+        app.UseSession();
+
         app.UseAuthorization();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllerRoute(
