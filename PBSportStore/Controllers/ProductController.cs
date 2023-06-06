@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PBSportStore.Models;
 using PBSportStore.Repositories.Interfaces;
 using PBSportStore.ViewModels;
 
@@ -13,14 +14,29 @@ namespace PBSportStore.Controllers
             _productRepository = repository;
         }
 
-        public IActionResult List()
+        public IActionResult List(string category)
         {
-            //var products = _productRepository.Products;
+            IEnumerable<Product> products;
+            string currentCategory = string.Empty;
 
-            //return View(products);
-            var productListViewModel = new ProductListViewModel();
-            productListViewModel.Products = _productRepository.Products;
-            productListViewModel.CurrentCategory = "Current Category";
+            if (string.IsNullOrEmpty(category))
+            {
+                products = _productRepository.Products.OrderBy(p => p.CategoryId);
+                currentCategory = "All products";
+            }
+            else
+            {
+                products = _productRepository.Products
+                        .Where(p => p.Category.CategoryName.Equals(category))
+                        .OrderBy(p => p.Name);
+                currentCategory = category;
+            }
+
+            var productListViewModel = new ProductListViewModel
+            {
+                Products = products,
+                CurrentCategory = currentCategory
+            };
 
             return View(productListViewModel);
         }
