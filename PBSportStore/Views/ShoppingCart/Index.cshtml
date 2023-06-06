@@ -30,9 +30,11 @@
                             @((item.Quantity * item.Product.Price).ToString("c"))
                         </td>
 
-                        <a asp-controller="ShoppingCart" asp-action="RemoveItemToShoppingCart"
-                            asp-route-productId="@item.Product.ProductId"><img src="~/images/trash.png"/>
-                        </a>
+                        <td class="text-center">
+                            <a asp-controller="ShoppingCart" asp-action="RemoveItemToShoppingCart"
+                                asp-route-productId="@item.Product.ProductId"><img src="~/images/trash.png"/>
+                            </a>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -52,7 +54,7 @@
             <div class="btn-group">
                 <a class="btn btn-success" asp-controller="Order" asp-action="Checkout">Close order</a>
                     &nbsp;&nbsp;&nbsp;
-                <a class="btn btn-success" asp-controller="Order" asp-action="Checkout">Close order</a>
+                <a class="btn btn-primary" asp-controller="Product" asp-action="List">Continue shopping</a>
             </div>
         </div>
     </div>

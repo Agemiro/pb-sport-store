@@ -42,7 +42,7 @@ public class ShoppingCart
             s => s.Product.ProductId == product.ProductId &&
             s.ShoppingCartId == ShoppingCartId);
 
-        if (shoppingCartItem != null)
+        if (shoppingCartItem == null)
         {
             shoppingCartItem = new ShoppingCartItem
             {
