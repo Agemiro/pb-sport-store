@@ -46,5 +46,37 @@ namespace PBSportStore.Controllers
             var product = _productRepository.Products.FirstOrDefault(p => p.ProductId == productId);
             return View(product);
         }
+
+        public ViewResult Search(string searchString)
+        {
+            IEnumerable<Product> products;
+            string currentCategory = string.Empty;
+
+            if(string.IsNullOrEmpty(searchString))
+            {
+                products = _productRepository.Products.OrderBy(p => p.ProductId);
+                currentCategory = "All products";
+            }
+            else
+            {
+                products = _productRepository.Products
+                    .Where(p => p.Name.ToLower().Contains(searchString.ToLower()));
+
+                if(products.Any())
+                {
+                    currentCategory = "Products";
+                }
+                else
+                {
+                    currentCategory = "No product was found";
+                }
+            }
+
+            return View("~/Views/Product/List.cshtml", new ProductListViewModel
+            {
+                Products = products,
+                CurrentCategory = currentCategory
+            });
+        }
     }
 }
