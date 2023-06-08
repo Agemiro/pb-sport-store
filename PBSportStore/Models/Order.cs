@@ -14,6 +14,7 @@ namespace PBSportStore.Models
 
         [Required(ErrorMessage = "Inform the last name")]
         [StringLength(50)]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Inform the address ")]
