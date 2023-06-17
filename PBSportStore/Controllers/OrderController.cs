@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PBSportStore.Models;
 using PBSportStore.Repositories.Interfaces;
 
@@ -15,12 +16,14 @@ namespace PBSportStore.Controllers
             _shoppingCart = shoppingCart;
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult Checkout()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Checkout(Order order)
         {

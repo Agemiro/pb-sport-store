@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PBSportStore.Models;
 using PBSportStore.Repositories.Interfaces;
 using PBSportStore.ViewModels;
@@ -31,6 +32,7 @@ namespace PBSportStore.Controllers
             return View(shoppingCartViewModel);
         }
 
+        [Authorize]
         public IActionResult AddItemToShoppingCart(int productId)
         {
             var selectedProduct = _productRepository.Products
@@ -44,6 +46,7 @@ namespace PBSportStore.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult RemoveItemToShoppingCart(int productId)
         {
             var selectedProduct = _productRepository.Products
