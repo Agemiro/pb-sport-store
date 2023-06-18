@@ -4,6 +4,7 @@ using PBSportStore.Context;
 using PBSportStore.Models;
 using PBSportStore.Repositories;
 using PBSportStore.Repositories.Interfaces;
+using PBSportStore.Services;
 
 namespace PBSportStore;
 
@@ -40,6 +41,15 @@ public class Startup
         services.AddTransient<IProductRepository, ProductRepository>();
         services.AddTransient<ICategoryRepository, CategoryRepository>();
         services.AddTransient<IOrderRepository, OrderRepository>();
+        services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Admin", policy =>
+            {
+                policy.RequireRole("Admin");
+            });
+        });
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped(sp => ShoppingCart.GetCart(sp));
@@ -51,7 +61,8 @@ public class Startup
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, 
+        IWebHostEnvironment env, ISeedUserRoleInitial seedUserRoleInitial)
     {
         if (env.IsDevelopment())
         {
@@ -66,6 +77,11 @@ public class Startup
         app.UseHttpsRedirection(); 
         app.UseStaticFiles();
         app.UseRouting();
+
+        // Cria os perfis.
+        seedUserRoleInitial.SeedRoles();
+        // Cria os usuário e atribui ao perfil.
+        seedUserRoleInitial.SeedUsers();
 
         app.UseSession();
 
