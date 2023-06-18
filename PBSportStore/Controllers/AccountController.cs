@@ -5,6 +5,7 @@ using PBSportStore.ViewModels;
 
 namespace PBSportStore.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
